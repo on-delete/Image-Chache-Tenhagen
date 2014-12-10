@@ -1,0 +1,96 @@
+body {
+	background: #FFF;
+}
+a, a:hover {
+	text-decoration: none;
+	color: #FFF;
+}
+ul, ol {
+	list-style: none;
+}
+.wrapper {
+	max-width: 1280px;
+	width: 95%;
+	margin: 2% auto;
+	position: relative;
+}
+.main {
+	width: 100%;
+	/*max-width:500px;*/
+	/*margin:50px auto;*/
+}
+.main-desc {
+	font-size: 16px;
+	margin: 0 0 50px 0;
+}
+
+/*------------------------------------*\
+ Simple HTML5 data-tabs
+ \*------------------------------------*/
+
+.tabs {
+	width: 100%;
+}
+
+.tab {
+	float: left;
+	display: block;
+	padding: 10px 20px;
+	text-decoration: none;
+	border-radius: 5px 5px 0 0;
+	background: #F9F9F9;
+	color: #777;
+}
+.tab.active, .tab:hover {
+	background: #CEECF5;
+	color: #222;
+}
+.content {
+	display: none;
+	clear: both;
+	background: #FFF;
+	padding-top: 20px;
+}
+.content.active {
+	display: block;
+	padding-top: 1%;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-bottom: 1%;
+	background: #D8D8D8;
+}
+
+#content_active1 {
+	max-width: 500px;
+}
+
+#fileToUpload {
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}
+.clearfix:after {
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+
+.image {
+	float: left;
+	padding-left: 1%;
+}
+
+.image_tag {
+	display: table-cell;
+	max-width: 150px;
+}
+
+#search_image{
+	padding-left: 1%;
+	padding-bottom: 1%;
+}

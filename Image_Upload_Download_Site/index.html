@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>index</title>
+		<meta name="description" content="">
+		<meta name="author" content="Andre Krause">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link href="css/style.css" rel="stylesheet">
+		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/tab_controller.js"></script>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div class="main">
+				<!-- tabs -->
+				<div class="tabs">
+					<a href="#" data-tab="1" class="tab active">Bilder-Upload</a>
+					<a href="#" data-tab="2" class="tab">Bilder-Download</a>
+
+					<div data-content="1" id="content_active1" class="content active">
+						<input type="text" placeholder="Name"/>
+						<form id="form1" enctype="multipart/form-data" method="post" action="Upload.aspx">
+							<div class="row">
+								<input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();"/>
+							</div>
+						</form>
+						<input type="submit" value="Bild hochladen" name="foto_upload">
+					</div>
+					<div data-content="2" class="content">
+						<div id="search_image" class="row">
+							<input type="text" name="search_image" placeholder="Name"/>
+							<input type="submit" value="Suchen" name="image_search_button">
+						</div>
+
+						<div class="clearfix">
+							<div class="image">
+								<img src="images/Windows_7_Star_Wave.jpg" width="150px" height="150px"/>
+								<p class="image_tag">
+									Image_Test
+								</p>
+							</div>
+							<div class="image">
+								<img src="images/Windows_7_Star_Wave.jpg" width="150px" height="150px"/>
+								<p class="image_tag">
+									Image_Test
+								</p>
+							</div>
+							<div class="image">
+								<img src="images/Windows_7_Star_Wave.jpg" width="150px" height="150px"/>
+								<p class="image_tag">
+									Image_Test
+								</p>
+							</div>
+							<div class="image">
+								<img src="images/Windows_7_Star_Wave.jpg" width="150px" height="150px"/>
+								<p class="image_tag">
+									Image_Test
+								</p>
+							</div>
+							<div class="image">
+								<img src="images/Windows_7_Star_Wave.jpg" width="150px" height="150px"/>
+								<p class="image_tag">
+									Image_Test
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
