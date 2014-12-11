@@ -94,3 +94,17 @@ ul, ol {
 	padding-left: 1%;
 	padding-bottom: 1%;
 }
+
+.error_message{
+	color: #F51E1E;
+	font-size: 10pt;
+}
+
+.error{
+	border-color: #F51E1E;
+}
+
+.image_result{
+	width: 150px;
+	height: 150px;
+}
