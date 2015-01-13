@@ -14,10 +14,41 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link href="css/style.css" rel="stylesheet">
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+        
 		<script src="js/jquery-2.1.1.min.js"></script>
 		<script src="js/tab_controller.js"></script>
 		<script src="js/uploadImage.js"></script>
 		<script src="js/downloadImage.js"></script>
+		<script src="js/benchmark.js"></script>
+        <script src="lib/fileinput.min.js" type="text/javascript"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+		<script>
+			$(document).ready(function() {
+				$("#fileToUpload").fileinput({
+					previewFileType : "image",
+					browseClass : "btn btn-success",
+					browseLabel : "Pick Image",
+					browseIcon : '<i class="glyphicon glyphicon-picture"></i>',
+					removeClass : "btn btn-danger",
+					removeLabel : "Delete",
+					removeIcon : '<i class="glyphicon glyphicon-trash"></i>',
+					uploadClass : "btn btn-info",
+					uploadLabel : "Upload",
+					uploadIcon : '<i class="glyphicon glyphicon-upload"></i>',
+					mainClass : "fileToUpload",
+					maxFileCount: "1",
+				});
+
+				$(".kv-fileinput-upload").on("click", function() {
+					uploadImage();
+				});
+			});
+		</script>
+
 	</head>
 
 	<body>
@@ -27,22 +58,18 @@
 				<div class="tabs">
 					<a href="#" data-tab="1" class="tab active">Bilder-Upload</a>
 					<a href="#" data-tab="2" class="tab">Bilder-Download</a>
+					<a href="#" data-tab="3" class="tab">Benchmark</a>
 
 					<div data-content="1" id="content_active1" class="content active">
-						<input type="text" id="input_image_name" class="" placeholder="Name"/>
+						<input type="text" id="input_image_name" placeholder="Name"/>
 						<span id="name_error_message" class="error_message" style="display:none;"></span>
-						<form id="form1" >
-							<div class="row">
-								<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"/>
-								<span id="image_error_message" class="error_message" style="display:none;"></span>
-							</div>
-						</form>
-						<input type="submit" value="Bild hochladen" name="foto_upload" onclick="uploadImage()">
+						
+						<input id="fileToUpload" type="file" data-show-preview="false" accept="image/*">
 					</div>
 					<div data-content="2" class="content">
 						<div id="search_image" class="row">
-							<input type="text" name="search_image" placeholder="Name"/>
-							<input type="submit" value="Suchen" name="image_search_button">
+							<input type="text" name="search_image" id="search_image_field" class="search_image_field" placeholder="Name"/>
+							<input type="submit" value="Suchen" name="image_search_button" id="image_search_button" class="image_search_button" onclick="searchImage()">
 						</div>
 
 						<div id="image_container" class="clearfix">
@@ -76,6 +103,20 @@
 									Image_Test
 								</p>
 							</div>
+						</div>
+					</div>
+					<div data-content="3" class="content">
+						<div id="search_image_benchmark" class="row">
+							<input type="text" class="search_image_field" name="search_image" id="search_image_field_benchmark" placeholder="Name"/>
+							<input type="submit" value="Suchen" name="image_search_button" id="image_search_button_benchmark" class="image_search_button" onclick="benchmark()">
+							<input type="text" class="search_image_field" name="number_iterations" id="number_iterations" placeholder="Anz. Wiederholungen"/>
+						</div>
+						<div id="results">
+							<h2 id="results1">Auswertung für das Bild: </h2>
+							<p id="results2">Anz. Wiederholungen: </p>
+							<p id="results3">Höchste Antwortzeit: </p>
+							<p id="results4">Niedrigste Antwortzeit: </p>
+							<p id="results5">Durchschnittliche Antwortzeit Antwortzeit: </p>
 						</div>
 					</div>
 				</div>

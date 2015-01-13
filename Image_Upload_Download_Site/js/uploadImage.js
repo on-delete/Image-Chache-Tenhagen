@@ -44,7 +44,18 @@ function validation(){
 }
 
 function validateNameUnique(){
-	return true;
+	var nameUnique = true;
+	
+	/*Rest-call hier*/
+	if(nameUnique==true){
+		return true;
+	}
+	else{
+		$('#input_image_name').attr('class', 'error');
+		$('#name_error_message').css('display', 'inline');
+		$('#name_error_message').text('Name ist bereits vorhanden!');
+		return false;
+	}
 }
 
 function readImage(){
