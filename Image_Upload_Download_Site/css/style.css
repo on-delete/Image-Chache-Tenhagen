@@ -61,12 +61,7 @@ ul, ol {
 }
 
 #content_active1 {
-	max-width: 500px;
-}
-
-#fileToUpload {
-	padding-top: 2%;
-	padding-bottom: 2%;
+	max-width: 550px;
 }
 
 .clearfix:before, .clearfix:after {
@@ -82,7 +77,7 @@ ul, ol {
 
 .image {
 	float: left;
-	padding-left: 1%;
+	padding-right: 1%;
 }
 
 .image_tag {
@@ -91,6 +86,11 @@ ul, ol {
 }
 
 #search_image{
+	padding-left: 1%;
+	padding-bottom: 1%;
+}
+
+#search_image_benchmark{
 	padding-left: 1%;
 	padding-bottom: 1%;
 }
@@ -107,4 +107,44 @@ ul, ol {
 .image_result{
 	width: 150px;
 	height: 150px;
+}
+
+.fileToUpload {
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+#input_image_name{
+	width: 249px;
+	height: 32px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.search_image_field{
+	width: 249px;
+	height: 32px;
+	border-bottom-left-radius: 4px;
+	border-top-left-radius: 4px;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.image_search_button{
+	height: 32px;
+	margin-left: -6px;
+	border-bottom-right-radius: 4px;
+	border-top-right-radius: 4px;
+	border: 1px solid #ccc;
+	background-color: #5bc0de;
+	color: white;
+}
+
+#results{
+	padding-top: 0.5%;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-bottom: 1%;
+	background: #FFFFFF;
 }
