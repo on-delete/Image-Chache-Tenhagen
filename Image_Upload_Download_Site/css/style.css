@@ -105,8 +105,8 @@ ul, ol {
 }
 
 .image_result{
-	width: 150px;
-	height: 150px;
+	max-width: 1241px;
+	max-height: 800px;
 }
 
 .fileToUpload {

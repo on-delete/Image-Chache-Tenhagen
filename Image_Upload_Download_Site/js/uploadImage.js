@@ -3,14 +3,10 @@
  */
 
 function uploadImage(){
+	$('#image_success').css('display', 'none');
 	var validationSuccess = validation();
 	if(validationSuccess){
-		var nameUnique = validateNameUnique();
-		
-		if(nameUnique){
-			readImage();
-		}
-		else{}
+		validateNameUnique();
 	}
 	else{}
 }
@@ -44,18 +40,21 @@ function validation(){
 }
 
 function validateNameUnique(){
-	var nameUnique = true;
-	
-	/*Rest-call hier*/
-	if(nameUnique==true){
-		return true;
-	}
-	else{
-		$('#input_image_name').attr('class', 'error');
-		$('#name_error_message').css('display', 'inline');
-		$('#name_error_message').text('Name ist bereits vorhanden!');
-		return false;
-	}
+	$.ajax({
+  		type: "GET",
+  		url: "/image-cache/ImageServ/checkname/" + $('#input_image_name').val(),
+	}).done(function() {
+    	readImage();
+  	}).fail(function( jqXHR, textStatus ) {
+  		alert( "Anfrage fehlgeschlagen: " + textStatus );
+  		setImageNameUsed();
+	});	
+}
+
+function setImageNameUsed(){
+	$('#input_image_name').attr('class', 'error');
+	$('#name_error_message').css('display', 'inline');
+	$('#name_error_message').text('Name ist bereits vorhanden!');
 }
 
 function readImage(){
@@ -70,6 +69,34 @@ function readImage(){
 }
 
 function sendImage(result){
+	/*data:image/...;base64,...*/
+	var splittedString = result.split(",");
+	
+	/*data:image/...;base64*/
+	var splittedString2 = splittedString[0].split(":");
+	/*image/...;base64*/
+	var splittedString3 = splittedString2[1].split(";");
+	
+	var imageData = splittedString[1];
+	/*image/...*/
+	var contentType = splittedString3[0];
+	
+	var jsonObject = {
+		"name" : $('#input_image_name').val(),
+		"imageData" : imageData,
+		"contentType" : contentType
+	};
+	
+	$.ajax({
+  		type: "POST",
+  		url: "/image-cache/ImageServ/upload",
+  		contentType: "application/json",
+  		data: JSON.stringify(jsonObject)
+	}).done(function() {
+		$('#image_success').css('display', 'inline');
+  	}).fail(function( jqXHR, textStatus ) {
+  		alert( "Upload fehlgeschlagen: " + textStatus );
+	});
+		
 	console.log(result);
-	addImage("Hallo", result);
 }

@@ -65,15 +65,17 @@
 						<span id="name_error_message" class="error_message" style="display:none;"></span>
 						
 						<input id="fileToUpload" type="file" data-show-preview="false" accept="image/*">
+						<span id="image_success" style="display:none;">Bild wurde erfolgreich gespeichert!</span>
 					</div>
 					<div data-content="2" class="content">
 						<div id="search_image" class="row">
 							<input type="text" name="search_image" id="search_image_field" class="search_image_field" placeholder="Name"/>
 							<input type="submit" value="Suchen" name="image_search_button" id="image_search_button" class="image_search_button" onclick="searchImage()">
+							<span id="name_error_message_search" class="error_message" style="display:none;"></span>
 						</div>
 
 						<div id="image_container" class="clearfix">
-							<div class="image">
+							<!--<div class="image">
 								<img src="images/Windows_7_Star_Wave.jpg" class="image_result" alt="image-result"/>
 								<p class="image_tag">
 									Image_Test
@@ -102,7 +104,7 @@
 								<p class="image_tag">
 									Image_Test
 								</p>
-							</div>
+							</div>-->
 						</div>
 					</div>
 					<div data-content="3" class="content">
