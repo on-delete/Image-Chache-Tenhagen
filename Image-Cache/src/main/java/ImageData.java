@@ -1,15 +1,10 @@
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class ImageData {
 	
 	private String name;
 	
 	private String imageData;
 	
-	public ImageData(){
-		
-	}
+	public ImageData(){}
 	
 	public ImageData(String name, String imageData){
 		this.name = name;
