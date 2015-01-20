@@ -6,13 +6,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class ImageCache {
 	
 	private static ImageCache imageCache = null;
-	private HashMap<String, String> cache = null;
+	private HashMap<String, ImageData> cache = null; 
 	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 	private final Lock readLock  = lock.readLock();
 	private final Lock writeLock = lock.writeLock();
 	
 	private ImageCache(){
-		cache = new HashMap<String, String>();
+		cache = new HashMap<String, ImageData>();
 	}
 	
 	public static ImageCache current(){
@@ -22,7 +22,7 @@ public class ImageCache {
 		return imageCache;
 	}
 	
-	public void storeToCache(String name, String imageData){
+	public void storeToCache(String name, ImageData imageData){
 		writeLock.lock();
 		try{
 			cache.put(name, imageData);
@@ -34,7 +34,7 @@ public class ImageCache {
 	public void storeToCache(ImageData imageData){
 		writeLock.lock();
 		try{
-			cache.put(imageData.getName(), imageData.getImageData());
+			cache.put(imageData.getName(), imageData);
 		}finally{
 			writeLock.unlock();
 		}
@@ -44,7 +44,7 @@ public class ImageCache {
 		readLock.lock();
 		try{
 			if(cache.containsKey(name)){
-				return new ImageData(name, cache.get(name));
+				return cache.get(name);
 			}
 			return null;
 		}finally{

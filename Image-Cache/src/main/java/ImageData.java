@@ -2,13 +2,16 @@ public class ImageData {
 	
 	private String name;
 	
+	private String contentType;
+	
 	private String imageData;
 	
 	public ImageData(){}
 	
-	public ImageData(String name, String imageData){
+	public ImageData(String name, String imageData, String contentType){
 		this.name = name;
 		this.imageData = imageData;
+		this.contentType = contentType;
 	}
 
 	public String getName() {
@@ -25,6 +28,14 @@ public class ImageData {
 
 	public void setImageData(String imageData) {
 		this.imageData = imageData;
+	}
+	
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	@Override
