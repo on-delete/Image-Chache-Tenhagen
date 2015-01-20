@@ -1,9 +1,4 @@
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,91 +9,67 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.codec.binary.Base64;
-
 @Path("/ImageServ")
 public class ImageServ {
-	
+
 	@GET
 	@Path("/HelloWorld")
 	@Produces(MediaType.TEXT_HTML)
-	public String helloWorld(){
-		ImageCache.current().storeToCache("test", "helloworld");
+	public String helloWorld() {
 		return "<html><head><title>Hello World</title></head><body><h1>Hello World!</h1></body></html>";
 	}
-	
+
 	@GET
-	@Path("/download/{imageName}")
+	@Path("/download/cache/{imageName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ImageData getImage(@PathParam("imageName") String name){
-		if(ImageCache.current().containsImage(name)){
+	public ImageData getImageCache(@PathParam("imageName") String name) {
+		if (ImageCache.current().containsImage(name)) {
 			return ImageCache.current().loadFromCache(name);
-		}else{
-			File imageFile = new File("C:\\Users\\Tobias Mack\\Documents\\"+name);
-			FileInputStream imageIn = null;
-			String image = "";
-			try {
-				imageIn = new FileInputStream(imageFile);
-				byte imageData[] = new byte[(int) imageFile.length()];
-				imageIn.read(imageData);
-				image = Base64.encodeBase64URLSafeString(imageData);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				try {
-					if(imageIn != null){
-						imageIn.close();
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(!image.equals("")){
+		} else {
+			ImageData image = GCSService.downloadImage(name);
+
+			if (image != null) {
 				ImageCache.current().storeToCache(name, image);
-				return new ImageData(name, image);
+				return image;
 			}
 			return null;
 		}
 	}
-	
+
+	@GET
+	@Path("/download/nocache/{imageName}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ImageData getImageNoCache(@PathParam("imageName") String name) {
+		ImageData image = GCSService.downloadImage(name);
+
+		if (image != null) {
+			ImageCache.current().storeToCache(name, image);
+			return image;
+		}
+		return null;
+	}
+
+	@GET
+	@Path("/checkname/{imageName}")
+	public Response checkName(@PathParam("imageName") String name) {
+		List<String> nameList = GCSService.getAllImageNames();
+		if(!(nameList.size()<=0)){
+			if(!(nameList.contains(name))){
+				return Response.status(200).build();
+			}	
+		}
+		return Response.status(400).build();
+	}
+
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-	public Response uploadImage(ImageData imageData){
-		
-		File file = new File("C:\\Users\\Tobias Mack\\Documents\\"+imageData.getName());
-		
-		FileOutputStream imageOut = null;
-		try {
-			if(!file.exists()){
-				file.createNewFile();
-			}
-			imageOut = new FileOutputStream(file);
-			imageOut.write(Base64.decodeBase64(imageData.getImageData()));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if(imageOut != null){
-					imageOut.close();
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public Response uploadImage(ImageData imageData) {
+		if (GCSService.uploadImage(imageData.getImageData(), imageData.getName(), imageData.getContentType())) {
+			return Response.status(201).entity(imageData).build();
+		} else {
+			return Response.status(502).build();
 		}
-		
-		return Response.status(201).entity(imageData).build();
-		
+
 	}
 }
