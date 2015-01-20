@@ -66,7 +66,7 @@ public class ImageServ {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response uploadImage(ImageData imageData) {
 		if (GCSService.uploadImage(imageData.getImageData(), imageData.getName(), imageData.getContentType())) {
-			return Response.status(201).entity(imageData).build();
+			return Response.status(200).build();
 		} else {
 			return Response.status(502).build();
 		}

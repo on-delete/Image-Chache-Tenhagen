@@ -24,7 +24,7 @@ import com.google.appengine.repackaged.org.apache.commons.codec.binary.Base64;
 
 public class GCSService {
 
-	private static String AUTH_TOKEN = "";
+	private static String AUTH_TOKEN = "ya29.AQG4Y6hiUk7ly__k5bOSHWzzRMjT6WodCQEna79kjvv3iHgUqigH8psgtUVpZna-kwH8htpETsljyg";
 	
 	public static boolean uploadImage(String imageData, String name, String contentType){
 		CloseableHttpClient httpclient = HttpClients.createDefault();
