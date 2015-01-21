@@ -53,12 +53,20 @@ public class ImageServ {
 	@Path("/checkname/{imageName}")
 	public Response checkName(@PathParam("imageName") String name) {
 		List<String> nameList = GCSService.getAllImageNames();
-		if(!(nameList.size()<=0)){
-			if(!(nameList.contains(name))){
+		if(nameList!=null){
+			if(nameList.size()==0){
 				return Response.status(200).build();
-			}	
+			}
+			else if(!(nameList.contains(name))){
+				return Response.status(200).build();
+			}
+			else{
+				return Response.status(404).build();
+			}
 		}
-		return Response.status(400).build();
+		else{
+			return Response.status(500).build();
+		}
 	}
 
 	@POST
