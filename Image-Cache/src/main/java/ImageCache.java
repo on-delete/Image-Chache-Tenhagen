@@ -11,8 +11,25 @@ public class ImageCache {
 	private final Lock readLock  = lock.readLock();
 	private final Lock writeLock = lock.writeLock();
 	
+	private Thread t = new Thread(){
+		//Time between two clears of the cache in ms (60 * 60 * 1000 = 3600000 for one hour)
+		private final int TIMEOUT = 3600000;
+		public void run(){
+			try {
+				while(true){
+					Thread.sleep(TIMEOUT);
+					ImageCache.current().clearCache();					
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	};
+	
 	private ImageCache(){
 		cache = new HashMap<String, ImageData>();
+		t.start();
 	}
 	
 	public static ImageCache current(){
@@ -54,6 +71,15 @@ public class ImageCache {
 	
 	public boolean containsImage(String name){
 		return cache.containsKey(name);
+	}
+	
+	public void clearCache(){
+		writeLock.lock();
+		try{
+			cache.clear();
+		}finally{
+			writeLock.unlock();
+		}
 	}
 	
 }

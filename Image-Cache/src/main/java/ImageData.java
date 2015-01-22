@@ -40,7 +40,7 @@ public class ImageData {
 
 	@Override
 	public String toString() {
-		return "ImageData [name=" + name + ", imageData=" + imageData + "]";
+		return "ImageData [name=" + name + ", imageData=" + imageData + ", contentType=" + contentType +"]";
 	}
 	
 	
