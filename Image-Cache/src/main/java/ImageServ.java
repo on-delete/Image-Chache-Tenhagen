@@ -22,31 +22,31 @@ public class ImageServ {
 	@GET
 	@Path("/download/cache/{imageName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ImageData getImageCache(@PathParam("imageName") String name) {
+	public Response getImageCache(@PathParam("imageName") String name) {
 		if (ImageCache.current().containsImage(name)) {
-			return ImageCache.current().loadFromCache(name);
+			return Response.status(200).entity(ImageCache.current().loadFromCache(name)).build();
 		} else {
 			ImageData image = GCSService.downloadImage(name);
 
 			if (image != null) {
 				ImageCache.current().storeToCache(name, image);
-				return image;
+				return Response.status(200).entity(image).build();
 			}
-			return null;
+			return Response.status(500).build();
 		}
 	}
 
 	@GET
 	@Path("/download/nocache/{imageName}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ImageData getImageNoCache(@PathParam("imageName") String name) {
+	public Response getImageNoCache(@PathParam("imageName") String name) {
 		ImageData image = GCSService.downloadImage(name);
 
 		if (image != null) {
 			ImageCache.current().storeToCache(name, image);
-			return image;
+			return Response.status(200).entity(image).build();
 		}
-		return null;
+		return Response.status(500).build();
 	}
 
 	@GET
@@ -76,7 +76,7 @@ public class ImageServ {
 		if (GCSService.uploadImage(imageData.getImageData(), imageData.getName(), imageData.getContentType())) {
 			return Response.status(200).build();
 		} else {
-			return Response.status(502).build();
+			return Response.status(500).build();
 		}
 
 	}
