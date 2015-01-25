@@ -24,7 +24,12 @@ public class ImageServ {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getImageCache(@PathParam("imageName") String name) {
 		if (ImageCache.current().containsImage(name)) {
-			return Response.status(200).entity(ImageCache.current().loadFromCache(name)).build();
+			ImageData image = ImageCache.current().loadFromCache(name);
+			if(image != null){
+				return Response.status(200).entity(ImageCache.current().loadFromCache(name)).build();
+			}else{
+				return Response.status(500).build();
+			}
 		} else {
 			ImageData image = GCSService.downloadImage(name);
 
